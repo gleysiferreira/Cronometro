@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <title>Cronometro</title>
+</head>
+<body>
+    <img src="./imagem-missao0.png" alt="logo"> 
+    <div id="box-number">
+        <span class="number" id="horas"> 00</span>
+        <span class="number"> :</span>
+        <span class="number" id="minutos"> 00</span>
+        <span class="number"> :</span>
+        <span class="number" id="segundos"> 00</span>
+        <span class="number"> :</span>
+        <span class="number green-number" id="mili"> 00</span>
+    </div>
+    <div id="box-bottons">
+        <button class="bottons" id="start"> Start</button>
+        <button class="bottons" id="stop"> Stop</button>
+        <button class="bottons" id="reset"> Reset</button>
+    </div>
+    
+</body>
+<script>
+    let btnStart = document.getElementById("start")
+    let btnStop = document.getElementById("stop")
+    let btnReset = document.getElementById("reset")
+    let mili = document.getElementById("mili")
+    let segundos = document.getElementById("segundos")
+    let minutos = document.getElementById("minutos")
+    let horas = document.getElementById("horas")
+
+    let startTimer
+    let ms = "00"
+    let seg = "00"
+    let min = "00"
+    let hr = "00"
+
+
+    function start(){
+        startTimer = setInterval(function () {
+            ms++
+
+            if(ms == 100){
+                seg++
+
+                if(seg < 10){
+                    seg = "0" + seg
+                }
+                ms = 0
+            }
+
+            if(seg == 60){
+                min++
+
+                if(min < 10){
+                    min = "0" + min
+                }
+                seg = 0
+            }
+
+            if(min == 60){
+                hr++
+
+                if(hr < 10){
+                    hr = "0" + hr
+                }
+                min = 0
+            }
+
+
+            btnStart.classList.add("ativo")
+            btnStop.classList.remove("ativo")
+            atualizaValor()
+        }, 10);
+
+    }
+
+    function stop(){
+        clearInterval(startTimer)
+        btnStop.classList.add("ativo")
+        btnStart.classList.remove("ativo")
+    }
+
+    function reset(){
+        clearInterval(startTimer)
+        ms = "00"
+        seg = "00"
+        min = "00"
+        hr = "00"
+        atualizaValor()
+        btnStart.classList.remove("ativo")
+        btnStop.classList.remove("ativo")
+    }
+
+    function atualizaValor(){
+        mili.innerHTML = ms
+        segundos.innerHTML = seg
+        minutos.innerHTML = min
+        horas.innerHTML = hr
+    }
+
+
+    btnStart.addEventListener("click", start)
+    btnStop.addEventListener("click", stop)
+    btnReset.addEventListener("click", reset)
+
+
+</script>
+</html>
